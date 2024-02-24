@@ -13,10 +13,11 @@ gem 'light_chat'
 ## Usage
 
 ```ruby
-c = LightChat::Client.new(provider: :copilot, auth_token: '***')
+client = LightChat::Client.new(provider: :copilot, auth_token: '***')
 # or
-c = LightChat::Client.new(provider: :openai, auth_token: 'sk-***')
-c.completions(messages: [{ role: 'user', content: 'What is the best way to sort an array in Ruby?' }])
+client = LightChat::Client.new(provider: :openai, auth_token: 'sk-***')
+response = client.completions(messages: [{ role: 'user', content: 'What is the best way to sort an array in Ruby?' }])
+response.dig('body', 'choices').select{|h| h.dig('message','role') == 'assistant'}.last.dig('message','content')
 ```
 
 ## Response
